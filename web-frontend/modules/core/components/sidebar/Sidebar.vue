@@ -140,9 +140,13 @@
                 v-for="application in applications"
                 :key="application.id"
                 :application="application"
+                :group="selectedGroup"
               ></component>
             </ul>
-            <li class="sidebar__new-wrapper">
+            <li
+              v-if="selectedGroup.permissions === 'ADMIN'"
+              class="sidebar__new-wrapper"
+            >
               <a
                 ref="createApplicationContextLink"
                 class="sidebar__new"

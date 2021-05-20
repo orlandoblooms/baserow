@@ -49,7 +49,7 @@
           </div>
         </a>
       </li>
-      <li class="dashboard__group-item">
+      <li v-if="group.permissions === 'ADMIN'" class="dashboard__group-item">
         <a
           ref="createApplicationContextLink"
           class="dashboard__group-item-link"

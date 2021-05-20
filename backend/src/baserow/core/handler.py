@@ -611,7 +611,7 @@ class CoreHandler:
         :rtype: Application
         """
 
-        group.has_user(user, raise_error=True)
+        group.has_user(user, "ADMIN", raise_error=True)
 
         # Figure out which model is used for the given application type.
         application_type = application_type_registry.get(type_name)
@@ -647,7 +647,7 @@ class CoreHandler:
         if not isinstance(application, Application):
             raise ValueError("The application is not an instance of Application.")
 
-        application.group.has_user(user, raise_error=True)
+        application.group.has_user(user, "ADMIN", raise_error=True)
 
         application = set_allowed_attrs(kwargs, ["name"], application)
         application.save()

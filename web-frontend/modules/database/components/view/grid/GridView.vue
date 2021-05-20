@@ -56,7 +56,7 @@
       :fields="visibleFields"
       :table="table"
       :view="view"
-      :include-add-field="true"
+      :include-add-field="selectedGroup.permissions === 'ADMIN'"
       :can-order-fields="true"
       :read-only="readOnly"
       :store-prefix="storePrefix"
@@ -134,7 +134,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 import { notifyIf } from '@baserow/modules/core/utils/error'
 import GridViewSection from '@baserow/modules/database/components/view/grid/GridViewSection'
@@ -235,6 +235,11 @@ export default {
     leftWidth() {
       return this.leftFieldsWidth + this.gridViewRowDetailsWidth
     },
+    ...mapState({
+      allApplications: (state) => state.application.items,
+      groups: (state) => state.group.items,
+      selectedGroup: (state) => state.group.selected,
+    }),
   },
   watch: {
     fieldOptions: {

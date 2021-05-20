@@ -1,27 +1,5 @@
 <template>
   <div class="layout__col-2-scroll">
-    <div
-      class="alert alert--simple alert--warning alert--has-icon dashboard__alert"
-    >
-      <div class="alert__icon">
-        <i class="fas fa-exclamation"></i>
-      </div>
-      <div class="alert__title">We need your help!</div>
-      <p class="alert__content">
-        Do you like Baserow and where the product is headed? Do you want to see
-        new features sooner? By becoming a sponsor you will allow us to spend
-        more time on the development of Baserow which means you will get new
-        features faster. Your help is much appreciated.
-      </p>
-      <a
-        href="https://github.com/sponsors/bram2w"
-        target="_blank"
-        class="button button--primary dashboard__alert-button"
-      >
-        Become a GitHub sponsor
-        <i class="fa fa-heart"></i>
-      </a>
-    </div>
     <GroupInvitation
       v-for="invitation in groupInvitations"
       :key="'invitation-' + invitation.id"

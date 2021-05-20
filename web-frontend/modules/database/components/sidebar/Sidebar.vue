@@ -1,5 +1,9 @@
 <template>
-  <SidebarApplication :application="application" @selected="selected">
+  <SidebarApplication
+    :application="application"
+    :group="group"
+    @selected="selected"
+  >
     <template #context>
       <li>
         <nuxt-link
@@ -24,7 +28,11 @@
           :table="table"
         ></SidebarItem>
       </ul>
-      <a class="tree__sub-add" @click="$refs.createTableModal.show()">
+      <a
+        v-if="group.permissions === 'ADMIN'"
+        class="tree__sub-add"
+        @click="$refs.createTableModal.show()"
+      >
         <i class="fas fa-plus"></i>
         Create table
       </a>
@@ -47,6 +55,10 @@ export default {
   components: { SidebarApplication, SidebarItem, CreateTableModal },
   props: {
     application: {
+      type: Object,
+      required: true,
+    },
+    group: {
       type: Object,
       required: true,
     },
