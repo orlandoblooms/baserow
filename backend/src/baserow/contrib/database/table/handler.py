@@ -80,7 +80,7 @@ class TableHandler:
         :rtype: Table
         """
 
-        database.group.has_user(user, raise_error=True)
+        database.group.has_user(user, "ADMIN", raise_error=True)
 
         if data is not None:
             fields, data = self.normalize_initial_table_data(data, first_row_header)
@@ -196,7 +196,6 @@ class TableHandler:
             )
             for index, row in enumerate(data)
         ]
-        model.objects.bulk_create(bulk_data)
 
     def fill_example_table_data(self, user, table):
         """
@@ -227,8 +226,7 @@ class TableHandler:
         )
 
         model = table.get_model(attribute_names=True)
-        model.objects.create(name="Tesla", active=True, order=1)
-        model.objects.create(name="Amazon", active=False, order=2)
+        model.objects.create(name="", active=True, order=1)
 
     def update_table(self, user, table, **kwargs):
         """
@@ -272,7 +270,7 @@ class TableHandler:
         if not isinstance(table, Table):
             raise ValueError("The table is not an instance of Table")
 
-        table.database.group.has_user(user, raise_error=True)
+        table.database.group.has_user(user, "ADMIN", raise_error=True)
         table_id = table.id
 
         self._delete_table(table)
