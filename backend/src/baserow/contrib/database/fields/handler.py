@@ -88,7 +88,8 @@ class FieldHandler:
         """
 
         group = table.database.group
-        group.has_user(user, raise_error=True)
+        #group.has_user(user, raise_error=True)
+        group.has_user(user, "ADMIN", raise_error=True)
 
         # Because only one primary field per table can exist and we have to check if one
         # already exists. If so the field cannot be created and an exception is raised.
@@ -161,7 +162,8 @@ class FieldHandler:
             raise ValueError("The field is not an instance of Field.")
 
         group = field.table.database.group
-        group.has_user(user, raise_error=True)
+        #group.has_user(user, raise_error=True)
+        group.has_user(user, "ADMIN", raise_error=True)
 
         old_field = deepcopy(field)
         field_type = field_type_registry.get_by_model(field)
@@ -318,7 +320,8 @@ class FieldHandler:
             raise ValueError("The field is not an instance of Field")
 
         group = field.table.database.group
-        group.has_user(user, raise_error=True)
+        #group.has_user(user, raise_error=True)
+        group.has_user(user, "ADMIN", raise_error=True)
 
         if field.primary:
             raise CannotDeletePrimaryField(
@@ -363,8 +366,9 @@ class FieldHandler:
         """
 
         group = field.table.database.group
-        group.has_user(user, raise_error=True)
-
+        #group.has_user(user, raise_error=True)
+        group.has_user(user, "ADMIN", raise_error=True)
+        
         existing_select_options = field.select_options.all()
 
         # Checks which option ids must be selected by comparing the existing ids with
