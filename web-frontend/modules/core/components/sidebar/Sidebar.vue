@@ -177,7 +177,7 @@
           </template>
         </ul>
       </div>
-      <div class="sidebar__foot">
+      <!-- <div class="sidebar__foot">
         <div class="sidebar__logo">
           <img
             height="14"
@@ -197,7 +197,7 @@
             }"
           ></i>
         </a>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

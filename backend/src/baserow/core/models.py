@@ -49,7 +49,7 @@ class Settings(models.Model):
 
 
 class Group(CreatedAndUpdatedOnMixin, models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
     users = models.ManyToManyField(User, through="GroupUser")
 
     objects = GroupQuerySet.as_manager()

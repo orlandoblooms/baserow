@@ -117,21 +117,23 @@ class UserHandler:
             # therefore the administrator user, lets give them staff rights so they
             # can set baserow wide settings.
             user.is_staff = True
-
+            
+            if not group_user:
+                group_user = core_handler.create_group(user=user, name="Market")
+        
         user.save()
+        
+        core_handler.join_group(user=user, group_name="Market")
 
         if group_invitation_token:
             group_user = core_handler.accept_group_invitation(user, group_invitation)
-
-        if not group_user:
-            group_user = core_handler.create_group(user=user, name=f"{name}'s group")
 
         if not group_invitation_token and template:
             core_handler.install_template(user, group_user.group, template)
 
         # Call the user_created method for each plugin that is un the registry.
-        for plugin in plugin_registry.registry.values():
-            plugin.user_created(user, group_user.group, group_invitation, template)
+        #for plugin in plugin_registry.registry.values():
+        #    plugin.user_created(user, group_user.group, group_invitation, template)
 
         return user
 

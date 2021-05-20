@@ -144,6 +144,19 @@ class CoreHandler:
 
         return group_user
 
+    def join_group(self, user, group_name):
+        group = Group.objects.filter(name = group_name).first()
+        last_order = GroupUser.get_last_order(user)
+        if group is not None:
+            group_user = GroupUser.objects.create(
+                group=group,
+                user=user,
+                order=last_order
+            )
+
+
+        return group_user
+
     def update_group(self, user, group, **kwargs):
         """
         Updates the values of a group if the user on whose behalf the request is made
