@@ -1,6 +1,8 @@
 from django.db import transaction
 
 from rest_framework.views import APIView
+from rest_framework.response import Response
+
 from drf_spectacular.utils import extend_schema
 
 from baserow.api.decorators import validate_body
@@ -12,7 +14,7 @@ class ServerFileUploadView(APIView):
     serializer_class = UploadSerializer
 
     @staticmethod
-    def get_uploaded_file_as_df(request):
+    def get_uploaded_file_as_list(request):
         return request.FILES.get('data')
 
     @extend_schema(
@@ -37,7 +39,11 @@ class ServerFileUploadView(APIView):
     )
     @transaction.atomic
     @validate_body(UploadSerializer)
-    def post(self, request, data, database_id):
-        csv_file = self.get_uploaded_file_as_df(request)
-        ServerFileUploadHandler.upload(csv_file)
+    def post(self, request, data):
+        servers = self.get_uploaded_file_as_list(request)
+        ServerFileUploadHandler().upload(
+            servers = servers,
+            user = request.user,
+            name = data['name'],
+            exploit = data['exploit'])
         return Response()

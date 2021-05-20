@@ -82,6 +82,11 @@ export const actions = {
 
     return data
   },
+  async upload({ commit, dispatch }, { values }) {
+    const { data } = await TableService(this.$client).upload(values)
+
+    return data
+  },
   /**
    * Forcefully create an item in the store without making a call to the server.
    */

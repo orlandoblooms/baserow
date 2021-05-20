@@ -82,35 +82,21 @@ export default {
       this.loading = true
       this.hideError()
 
-      let firstRowHeader = false
-      let data = null
-
-      if (Object.prototype.hasOwnProperty.call(values, 'firstRowHeader')) {
-        firstRowHeader = values.firstRowHeader
-        delete values.firstRowHeader
-      }
-
       if (Object.prototype.hasOwnProperty.call(values, 'data')) {
-        data = JSON.parse(values.data)
-        delete values.data
+        values.data = JSON.parse(values.data)
       }
-
       try {
-        const table = await this.$store.dispatch('table/create', {
-          database: this.application,
+        await this.$store.dispatch('table/upload', {
           values,
-          initialData: data,
-          firstRowHeader,
         })
         this.loading = false
         this.hide()
 
-        // Redirect to the newly created table.
         this.$nuxt.$router.push({
           name: 'database-table',
           params: {
             databaseId: this.application.id,
-            tableId: table.id,
+            tableId: 16,
           },
         })
       } catch (error) {

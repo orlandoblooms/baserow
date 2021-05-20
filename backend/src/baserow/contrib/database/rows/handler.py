@@ -20,6 +20,9 @@ from .signals import (
 
 
 class RowHandler:
+    def field_id_by_name(self, field_name) -> str:
+        return 'field_82'
+
     def prepare_values(self, fields, values):
         """
         Prepares a set of values so that they can be created or updated in the database.
@@ -246,7 +249,10 @@ class RowHandler:
         if not model:
             model = table.get_model()
 
+        print(values)
         values = self.prepare_values(model._field_objects, values)
+        print(values)
+        raise ValueError
         values, manytomany_values = self.extract_manytomany_values(values, model)
         values["order"] = self.get_order_before_row(before, model)
         instance = model.objects.create(**values)

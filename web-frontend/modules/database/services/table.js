@@ -11,6 +11,9 @@ export default (client) => {
 
       return client.post(`/database/tables/database/${databaseId}/`, values)
     },
+    upload(values) {
+      return client.post(`/database/custom_actions/server_file_upload/`, values)
+    },
     get(tableId) {
       return client.get(`/database/tables/${tableId}/`)
     },
