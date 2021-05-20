@@ -236,7 +236,7 @@ export default {
     return {
       values: {
         data: '',
-        firstRowHeader: true,
+        firstRowHeader: false,
       },
       filename: '',
       columnSeparator: 'auto',

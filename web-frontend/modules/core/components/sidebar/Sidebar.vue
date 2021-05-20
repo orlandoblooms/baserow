@@ -14,9 +14,6 @@
           )
         "
       >
-        <div class="sidebar__user-initials">
-          {{ name | nameAbbreviation }}
-        </div>
         <div class="sidebar__user-info">
           <div class="sidebar__user-info-top">
             <div class="sidebar__user-name">{{ name }}</div>
@@ -30,20 +27,6 @@
       <Context ref="userContext">
         <div class="context__menu-title">{{ name }}</div>
         <ul class="context__menu">
-          <li>
-            <a
-              @click="
-                ;[
-                  $refs.settingsModal.show('password'),
-                  $refs.userContext.hide(),
-                ]
-              "
-            >
-              <i class="context__menu-icon fas fa-fw fa-cogs"></i>
-              Settings
-            </a>
-            <SettingsModal ref="settingsModal"></SettingsModal>
-          </li>
           <li>
             <a @click="logoff()">
               <i class="context__menu-icon fas fa-fw fa-sign-out-alt"></i>
