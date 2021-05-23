@@ -20,9 +20,6 @@ from .signals import (
 
 
 class RowHandler:
-    def field_id_by_name(self, field_name) -> str:
-        return 'field_82'
-
     def prepare_values(self, fields, values):
         """
         Prepares a set of values so that they can be created or updated in the database.
@@ -219,7 +216,7 @@ class RowHandler:
 
         return row
 
-    def create_row(self, user, table, values=None, model=None, before=None):
+    def create_row(self, user, table, values=None, model=None, before=None, attribute_names=False):
         """
         Creates a new row for a given table with the provided values.
 
@@ -247,12 +244,9 @@ class RowHandler:
         group.has_user(user, raise_error=True)
 
         if not model:
-            model = table.get_model()
+            model = table.get_model(attribute_names=attribute_names)
 
-        print(values)
         values = self.prepare_values(model._field_objects, values)
-        print(values)
-        raise ValueError
         values, manytomany_values = self.extract_manytomany_values(values, model)
         values["order"] = self.get_order_before_row(before, model)
         instance = model.objects.create(**values)
@@ -265,6 +259,28 @@ class RowHandler:
         )
 
         return instance
+
+    def update_or_create_named_row(self, user, table, values=None, model=None, before=None, attribute_names=False):
+        if not values:
+            values = {}
+
+        group = table.database.group
+        group.has_user(user, raise_error=True)
+
+        if not model:
+            model = table.get_model(attribute_names=attribute_names)
+
+        values = self.prepare_values(model._field_objects, values)
+        values, manytomany_values = self.extract_manytomany_values(values, model)
+        values["order"] = self.get_order_before_row(before, model)
+        instance = model.objects.update_or_create(name=values.get('name'), defaults=values)[0]
+
+        for name, value in manytomany_values.items():
+            #if value
+            getattr(instance, name).add(value.id)
+
+        return instance
+
 
     def update_row(self, user, table, row_id, values, model=None):
         """
